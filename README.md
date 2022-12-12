@@ -7,7 +7,7 @@ using Kitty launch command.
 
 Currently this plugin is supported for the following DAP adapters:
 
-- Python: debugpy (developing)
+- Python: debugpy
 
 ## Quickstart
 
