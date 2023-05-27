@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 
-if [ "$(kitty @ ls | grep -c '"title": "nvim-dap')" -eq 0 ];
+launchid=nvim-${1}
+shift;
+
+if [ "$(kitty @ ls | grep -c "\"title\": \"${launchid}\"")" -eq 0 ];
 then
-  kitty @ --to "$KITTY_LISTEN_ON" launch --keep-focus --title "nvim-dap" "$SHELL"
+  kitty @ --to "$KITTY_LISTEN_ON" launch --keep-focus --title "${launchid}" "$SHELL"
 fi
 
 # Currently only support python
@@ -17,7 +20,7 @@ if [[ "$*" == -* ]]; then
   flag=$1
   shift
   others=$(echo "$*"|sed 's/"/\\\\"/g')
-  kitty @ --to "$KITTY_LISTEN_ON" send-text --match title:"nvim-dap" "$python $debugger $pid $flag_break $flag \"$others\"\x0d"
+  kitty @ --to "$KITTY_LISTEN_ON" send-text --match title:"${launchid}" "$python $debugger $pid $flag_break $flag \"$others\"\x0d"
 else
-  kitty @ --to "$KITTY_LISTEN_ON" send-text --match title:"nvim-dap" "$python $debugger $pid $flag_break $*\x0d"
+  kitty @ --to "$KITTY_LISTEN_ON" send-text --match title:"${launchid}" "$python $debugger $pid $flag_break $*\x0d"
 fi
