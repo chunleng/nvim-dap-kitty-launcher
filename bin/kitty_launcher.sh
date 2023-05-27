@@ -1,12 +1,16 @@
 #!/usr/bin/env sh
 
 launchid=nvim-${1}
-shift;
+cwd=$2
+shift;shift
 
 if [ "$(kitty @ ls | grep -c "\"title\": \"${launchid}\"")" -eq 0 ];
 then
   kitty @ --to "$KITTY_LISTEN_ON" launch --keep-focus --title "${launchid}" "$SHELL"
 fi
+
+kitty @ --to "$KITTY_LISTEN_ON" send-text --match title:"${launchid}" "cd $cwd\x0d"
+
 
 # Currently only support python
 python=$1
